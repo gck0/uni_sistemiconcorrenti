@@ -295,7 +295,7 @@ int main(int argc, char** argv) {
     
     //Start timing
     startTime = MPI_Wtime();
-    startTime=PAPI_get_real_usec();
+    startT=PAPI_get_real_usec();
 	
     //Merge sort
     if (id == 0) {
@@ -315,7 +315,7 @@ int main(int argc, char** argv) {
     //End timing
     localTime = MPI_Wtime() - startTime;
     // QUI CALCOLIAMO IL TEMPO TOTALE
-    stopT = PAPI_get_real_usec() - startT;
+    stopT = PAPI_get_real_usec();
 	
     MPI_Reduce(&localTime, &totalTime, 1, MPI_DOUBLE,
         MPI_MAX, 0, MPI_COMM_WORLD);
@@ -323,7 +323,7 @@ int main(int argc, char** argv) {
 
     if (id == 0) {
 		//printList(0, "FINAL SORTED ARRAY", globalArray, globalArraySize);  // Line C
-		printf("Sorting %d integers took %f seconds \n", globalArraySize,totalTime);
+		printf("Sorting %d integers took %f seconds and %f us\n", globalArraySize,totalTime,startT-stopT);
 		free(globalArray);
 	}
 
