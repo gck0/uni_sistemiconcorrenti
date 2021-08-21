@@ -22,6 +22,7 @@
 #include <math.h>    // log2
 #include <string.h>  // memcpy
 #include <limits.h>  // INT_MAX
+#include <papi.h>
 
 /* Declaration of functions */
 void powerOfTwo(int id, int numberProcesses);
