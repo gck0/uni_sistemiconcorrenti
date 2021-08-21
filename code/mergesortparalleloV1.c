@@ -278,7 +278,7 @@ int main(int argc, char** argv) {
     // allocate memory for local array, scatter to fill with values and print
     localArraySize = globalArraySize / numProcs;
     localArray = (int*) malloc (localArraySize * sizeof(int));
-    startT=PAPI_get_real_usec();
+    //startT=PAPI_get_real_usec();
     MPI_Scatter(globalArray, localArraySize, MPI_INT, localArray, 
 		localArraySize, MPI_INT, 0, MPI_COMM_WORLD);
     //printList(id, "localArray", localArray, localArraySize);   // Line B 
@@ -296,6 +296,7 @@ int main(int argc, char** argv) {
     
     //Start timing
     startTime = MPI_Wtime();
+    startT=PAPI_get_real_usec();
     
 	
     //Merge sort
