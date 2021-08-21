@@ -279,7 +279,8 @@ int main(int argc, char** argv) {
     //printList(id, "localArray", localArray, localArraySize);   // Line B 
     
     //Start timing
-    startTime = MPI_Wtime();
+    //startTime = MPI_Wtime();
+    startTime=PAPI_get_real_usec();
 	
     //Merge sort
     if (id == 0) {
@@ -297,7 +298,9 @@ int main(int argc, char** argv) {
 			id, numProcs, myHostName, processTotalTime);
 	}
     //End timing
-    localTime = MPI_Wtime() - startTime;
+    //localTime = MPI_Wtime() - startTime;
+    localTime = PAPI_get_real_usec() - startTime;
+	
     MPI_Reduce(&localTime, &totalTime, 1, MPI_DOUBLE,
         MPI_MAX, 0, MPI_COMM_WORLD);
 
