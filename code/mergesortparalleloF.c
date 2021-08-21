@@ -131,7 +131,8 @@ int main(int argc, char **argv)
     }
 
     // VISUALIZZA REPORT
-    printf("rank(id):%d \ttcm:%d \ts:%d \tp:%d processors \ttime:%lld ms\n",id,countCacheMiss,s,p,((stopT-startT)/1000));
+    printf("rank(id):%d \ttcm:%d \ts:%d \tp:%d processors \ttime:%lld ms\n",id,countCacheMiss,s,p,(stopT-startT));
+    printf("rank(id):%d \ttcm:%d \ts:%d \tp:%d processors \ttime:%f ms\n",id,countCacheMiss,s,p,((stopT-startT)/1000));
     
     // VISUALIZZA ARRAY ORDINATO       
     /*
