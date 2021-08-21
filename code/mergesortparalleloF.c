@@ -16,7 +16,7 @@ int EventSet = PAPI_NULL;
 //unsigned int native = 0x0;
 int retval;   // valore ritorno papi
 
-//MAIN
+//START
 int main(int argc, char **argv)
 {
     int * data;
