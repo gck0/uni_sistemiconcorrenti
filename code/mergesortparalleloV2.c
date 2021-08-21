@@ -96,7 +96,7 @@ int main(int argc, char** argv) {
 		*/
 		
 		/*****CALCOLO TEMPO******/
-		printf("tempo totale: %lld",PAPI_get_real_usec()-totalTime);
+		printf("tempo totale: %lld us\n",PAPI_get_real_usec()-totalTime);
 			
 		/********** Clean up root **********/
 		free(sorted);
