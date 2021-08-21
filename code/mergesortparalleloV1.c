@@ -323,8 +323,7 @@ int main(int argc, char** argv) {
 
     if (id == 0) {
 		//printList(0, "FINAL SORTED ARRAY", globalArray, globalArraySize);  // Line C
-		printf("Sorting %d integers took %f seconds and %f us\n", globalArraySize,totalTime,stopT-startT);
-	        printf("%lld", stopT-startT);
+		printf("Sorting %d integers took %f seconds and %lld us\n", globalArraySize,totalTime,stopT-startT);
 		free(globalArray);
 	}
 
