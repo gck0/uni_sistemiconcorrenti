@@ -243,6 +243,7 @@ int* mergeSort(int height, int id, int localArray[], int size, MPI_Comm comm, in
 /*-------------------------------------------------------------------*/
 
 int main(int argc, char** argv) {
+    long_long tempoTotale;
     long_long startT,stopT;  //tempi di esecuzione
     int EventSet = PAPI_NULL;
 
@@ -278,7 +279,9 @@ int main(int argc, char** argv) {
     // allocate memory for local array, scatter to fill with values and print
     localArraySize = globalArraySize / numProcs;
     localArray = (int*) malloc (localArraySize * sizeof(int));
-    //startT=PAPI_get_real_usec();
+    //CALCOLO TEMPO TOTALE
+    tempoTotale=PAPI_get_real_usec();
+	
     MPI_Scatter(globalArray, localArraySize, MPI_INT, localArray, 
 		localArraySize, MPI_INT, 0, MPI_COMM_WORLD);
     //printList(id, "localArray", localArray, localArraySize);   // Line B 
@@ -319,6 +322,8 @@ int main(int argc, char** argv) {
     // QUI CALCOLIAMO IL TEMPO TOTALE
     stopT = PAPI_get_real_usec();
     printf("%lld secs totali diff\n", (stopT-startT));
+    // TEMPO COMPLESSIVO
+    totalTime = PAPI_get_real_usec() - totalTime;
 	
     MPI_Reduce(&localTime, &totalTime, 1, MPI_DOUBLE,
         MPI_MAX, 0, MPI_COMM_WORLD);
@@ -332,5 +337,6 @@ int main(int argc, char** argv) {
 
     free(localArray);  
     MPI_Finalize();
+    printf("Il tempo totale di esecuzione è %lld\n", tempoTotale;
     return 0;
 }
