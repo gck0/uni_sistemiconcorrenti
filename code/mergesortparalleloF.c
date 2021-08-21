@@ -55,7 +55,7 @@ int main(int argc, char **argv)
     
     // valore di ritorno errori
     // PAPI: AGGIUNTA FUNZIONE CONTATORE CACHE MISS
-    //attenzione se ritorna errore -7 (PAPI_NOEVNT) - Event doesn't exist
+    //nelle VM può ritornare errore -7 (PAPI_NOEVNT) - Event doesn't exist
     retval = PAPI_add_event(EventSet,PAPI_L2_TCM);
     printf(PAPI_strerror(retval));
     printf("\n");
