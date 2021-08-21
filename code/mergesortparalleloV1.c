@@ -337,6 +337,6 @@ int main(int argc, char** argv) {
 
     free(localArray);  
     MPI_Finalize();
-    printf("Il tempo totale di esecuzione è %lld\n", tempoTotale;
+    printf("Il tempo totale di esecuzione è %lld\n", tempoTotale);
     return 0;
 }
