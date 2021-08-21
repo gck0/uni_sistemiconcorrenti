@@ -316,6 +316,7 @@ int main(int argc, char** argv) {
     localTime = MPI_Wtime() - startTime;
     // QUI CALCOLIAMO IL TEMPO TOTALE
     stopT = PAPI_get_real_usec();
+    printf("%lld secs totali diff\n", (stopT-startT));
 	
     MPI_Reduce(&localTime, &totalTime, 1, MPI_DOUBLE,
         MPI_MAX, 0, MPI_COMM_WORLD);
