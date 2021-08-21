@@ -280,6 +280,7 @@ int main(int argc, char** argv) {
     
     //Start timing
     startTime = MPI_Wtime();
+	
     //Merge sort
     if (id == 0) {
 		zeroStartTime = MPI_Wtime();
@@ -300,8 +301,10 @@ int main(int argc, char** argv) {
     MPI_Reduce(&localTime, &totalTime, 1, MPI_DOUBLE,
         MPI_MAX, 0, MPI_COMM_WORLD);
 
+
     if (id == 0) {
 		//printList(0, "FINAL SORTED ARRAY", globalArray, globalArraySize);  // Line C
+	        totalTime = totalTime * 1000000   //converto in microsecondi
 		printf("Sorting %d integers took %f seconds \n", globalArraySize,totalTime);
 		free(globalArray);
 	}
