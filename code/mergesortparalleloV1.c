@@ -323,7 +323,7 @@ int main(int argc, char** argv) {
     stopT = PAPI_get_real_usec();
     printf("%lld secs totali diff\n", (stopT-startT));
     // TEMPO COMPLESSIVO E VISUALIZZAZIONE
-    totalTime = PAPI_get_real_usec() - totalTime;
+    tempoTotale = PAPI_get_real_usec() - tempoTotale;
     if (id == 0) printf("Il tempo totale di esecuzione è %lld\n", tempoTotale);
 	
     MPI_Reduce(&localTime, &totalTime, 1, MPI_DOUBLE,
