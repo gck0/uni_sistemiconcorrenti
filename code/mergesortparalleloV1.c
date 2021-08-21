@@ -244,6 +244,7 @@ int* mergeSort(int height, int id, int localArray[], int size, MPI_Comm comm, in
 
 int main(int argc, char** argv) {
     long_long startT,stopT;  //tempi di esecuzione
+    int EventSet = PAPI_NULL;
 
     int numProcs, id, globalArraySize, localArraySize, height;
     int *localArray, *globalArray;
