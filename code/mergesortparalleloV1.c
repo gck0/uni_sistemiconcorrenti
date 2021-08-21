@@ -322,7 +322,6 @@ int main(int argc, char** argv) {
 
     if (id == 0) {
 		//printList(0, "FINAL SORTED ARRAY", globalArray, globalArraySize);  // Line C
-	        totalTime = totalTime * 1000000;   //converto in microsecondi
 		printf("Sorting %d integers took %f seconds \n", globalArraySize,totalTime);
 		free(globalArray);
 	}
