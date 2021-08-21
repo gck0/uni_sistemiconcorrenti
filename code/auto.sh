@@ -1,7 +1,10 @@
 #!/bin/sh
-SUFFIX=$1
-ELEMENTS=$2
+SUF=$1
+ELEM=$2
+
+PRE=mergesortparallelo
+FILE=${PRE}+${SUF}
 
 git pull
-mpicc $FILE.c /usr/local/lib/libpapi.a -lm -o "mergesortparallelo"$SUFFIX
-mpirun $FILE $ELEMENTS
+mpicc ${FILE}.c /usr/local/lib/libpapi.a -lm -o $FILE
+mpirun $FILE $ELEM
