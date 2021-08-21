@@ -42,26 +42,25 @@ int main(int argc, char **argv)
     printf("\n");
     
 
-    ///////////////PAPI
-    // inizializzazione di PAPI
+    // PAPI: INIZIALIZZAZIONE
     if (PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) {
         printf("Errore init PAPI\n");
         exit(1);
     }
-    // inizializzazione creazione di eventset
+    // PAPI: CREAZIONE EVENTSET
     if (PAPI_create_eventset(&EventSet) != PAPI_OK) {
         printf("Errore creazione EventSet PAPI\n");
         exit(1);
     }
     
     // valore di ritorno errori
-    //CALCOLO CACHE MISS
+    // PAPI: AGGIUNTA FUNZIONE CONTATORE CACHE MISS
     //attenzione se ritorna errore -7 (PAPI_NOEVNT) - Event doesn't exist
     retval = PAPI_add_event(EventSet,PAPI_L2_TCM);
     printf(PAPI_strerror(retval));
     printf("\n");
     
-    //funzioni di ambiente - slide10
+    // PAPI: FUNZIONI DI AMBIENTE (slide10)
     MPI_Init(&argc,&argv);
     MPI_Comm_rank(MPI_COMM_WORLD,&id);
     MPI_Comm_size(MPI_COMM_WORLD,&p);
@@ -69,7 +68,7 @@ int main(int argc, char **argv)
     //serve a calcolare di quanto sarà grande il 'pezzo' per ogni processo
     s = n/p;
     
-    // inizio conteggio cache miss
+    // PAPI: inizio conteggio cache miss
     retval = PAPI_start(EventSet) != PAPI_OK;
     printf(PAPI_strerror(retval));
     printf("\n");
@@ -79,7 +78,7 @@ int main(int argc, char **argv)
     //}
     
     
-    // preleva il tempo per ogni thread
+    // PAPI: preleva il tempo per ogni thread
     startT=PAPI_get_real_usec();
     //printf("%lld;; ", startT);
     
@@ -122,18 +121,19 @@ int main(int argc, char **argv)
         step = step*2;
     }
   
-    //STOP DEL TIMER
+    // PAPI: STOP DEL TIMER
     stopT=PAPI_get_real_usec();
     
-   //STOP DEI CONTATORI
-   if(PAPI_stop(EventSet, &countCacheMiss) != PAPI_OK){
-   	printf("Errore in stop e store del contatore \n");
-   	exit(1);
-   }
+    // PAPI: stop dei contatori
+    if(PAPI_stop(EventSet, &countCacheMiss) != PAPI_OK){
+        printf("Errore in stop e store del contatore \n");
+        exit(1);
+    }
 
-    
+    // VISUALIZZA SU SCHERMO UN REPORT
     printf("id:%d; miss:%d; s:%d; p:%d processors; %lld ms\n",id,countCacheMiss,s,p,(stopT-startT));
-       
+    
+    // VISUALIZZA ARRAY ORDINATO       
     if(id==0)
     {
         for(i=0;i<s;i++)
@@ -141,13 +141,12 @@ int main(int argc, char **argv)
     }
    
     MPI_Barrier(MPI_COMM_WORLD);
-    
-    //if(PAPI_stop(EventSet,&countCacheMiss) != PAPI_OK)  exit(1);
+   
     MPI_Finalize();
-    
 
 }
 
+// ALGORITMO MERGE SORT
 int * merge(int *A, int asize, int *B, int bsize) {
     int ai, bi, ci, i;
     int *C;
