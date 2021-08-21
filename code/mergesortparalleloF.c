@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     for(i=0;i<n;i++)
     {
         data[i] = random()%n;
-        printf("%d ", data[i]);
+        //printf("%d ", data[i]); //VISUALIZZA ARRAY INIZIALE
     }
     printf("\n");
     
@@ -121,7 +121,7 @@ int main(int argc, char **argv)
         step = step*2;
     }
   
-    // PAPI: STOP DEL TIMER
+    // PAPI: stop del timer
     stopT=PAPI_get_real_usec();
     
     // PAPI: stop dei contatori
@@ -130,15 +130,17 @@ int main(int argc, char **argv)
         exit(1);
     }
 
-    // VISUALIZZA SU SCHERMO UN REPORT
+    // VISUALIZZA REPORT
     printf("id:%d; miss:%d; s:%d; p:%d processors; %lld ms\n",id,countCacheMiss,s,p,(stopT-startT));
     
     // VISUALIZZA ARRAY ORDINATO       
+    /*
     if(id==0)
     {
         for(i=0;i<s;i++)
             printf("%d ",chunk[i]);
     }
+    */
    
     MPI_Barrier(MPI_COMM_WORLD);
    
