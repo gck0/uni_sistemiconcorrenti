@@ -39,7 +39,7 @@ int main(int argc, char **argv)
         data[i] = random()%n;
         //printf("%d ", data[i]); //VISUALIZZA ARRAY INIZIALE
     }
-    printf("\n");
+    //printf("\n");
     
 
     // PAPI: INIZIALIZZAZIONE
