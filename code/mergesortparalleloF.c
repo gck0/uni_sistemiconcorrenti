@@ -80,7 +80,7 @@ int main(int argc, char **argv)
     
     // PAPI: preleva il tempo per ogni thread
     startT=PAPI_get_real_usec();
-    //printf("%lld;; ", startT);
+    printf("id:%d\t start time: %lld;; ", id, startT);
     
     // chunk è la memoria da allocare per singolo processo
     // saranno i working set dei singoli processi (gather-scatter)
