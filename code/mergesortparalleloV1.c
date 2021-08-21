@@ -314,7 +314,8 @@ int main(int argc, char** argv) {
 	}
     //End timing
     localTime = MPI_Wtime() - startTime;
-    stopT = PAPI_get_real_usec() - startTime;
+    // QUI CALCOLIAMO IL TEMPO TOTALE
+    stopT = PAPI_get_real_usec() - startT;
 	
     MPI_Reduce(&localTime, &totalTime, 1, MPI_DOUBLE,
         MPI_MAX, 0, MPI_COMM_WORLD);
