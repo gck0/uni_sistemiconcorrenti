@@ -242,6 +242,8 @@ int* mergeSort(int height, int id, int localArray[], int size, MPI_Comm comm, in
 /*-------------------------------------------------------------------*/
 
 int main(int argc, char** argv) {
+    long_long startT,stopT;  //tempi di esecuzione
+
     int numProcs, id, globalArraySize, localArraySize, height;
     int *localArray, *globalArray;
     double startTime, localTime, totalTime;
@@ -278,8 +280,19 @@ int main(int argc, char** argv) {
 		localArraySize, MPI_INT, 0, MPI_COMM_WORLD);
     //printList(id, "localArray", localArray, localArraySize);   // Line B 
     
+    // PAPI: INIZIALIZZAZIONE
+    if (PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) {
+        printf("Errore init PAPI\n");
+        exit(1);
+    }
+    // PAPI: CREAZIONE EVENTSET
+    if (PAPI_create_eventset(&EventSet) != PAPI_OK) {
+        printf("Errore creazione EventSet PAPI\n");
+        exit(1);
+    }
+    
     //Start timing
-    //startTime = MPI_Wtime();
+    startTime = MPI_Wtime();
     startTime=PAPI_get_real_usec();
 	
     //Merge sort
@@ -298,8 +311,8 @@ int main(int argc, char** argv) {
 			id, numProcs, myHostName, processTotalTime);
 	}
     //End timing
-    //localTime = MPI_Wtime() - startTime;
-    localTime = PAPI_get_real_usec() - startTime;
+    localTime = MPI_Wtime() - startTime;
+    stopT = PAPI_get_real_usec() - startTime;
 	
     MPI_Reduce(&localTime, &totalTime, 1, MPI_DOUBLE,
         MPI_MAX, 0, MPI_COMM_WORLD);
