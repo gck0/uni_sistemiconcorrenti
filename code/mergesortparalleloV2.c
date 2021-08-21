@@ -2,11 +2,28 @@
 #include <stdlib.h>
 #include <time.h>
 #include <mpi.h>
+#include <papi.h>
 
 void merge(int *, int *, int, int, int);
 void mergeSort(int *, int *, int, int);
 
 int main(int argc, char** argv) {
+	
+	// PAPI
+	int EventSet = PAPI_NULL;
+	long_long totalTime;
+	
+	// PAPI: INIZIALIZZAZIONE
+	if (PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) {
+		printf("Errore init PAPI\n");
+		exit(1);
+    }
+        // PAPI: CREAZIONE EVENTSET
+	if (PAPI_create_eventset(&EventSet) != PAPI_OK) {
+		printf("Errore creazione EventSet PAPI\n");
+		exit(1);
+	}
+
 	
 	/********** Create and populate the array **********/
 	int n = atoi(argv[1]);
@@ -14,7 +31,7 @@ int main(int argc, char** argv) {
 	
 	int c;
 	srand(time(NULL));
-	printf("This is the unsorted array: ");
+	/*printf("This is the unsorted array: ");
 	for(c = 0; c < n; c++) {
 		
 		original_array[c] = rand() % n;
@@ -24,6 +41,7 @@ int main(int argc, char** argv) {
 
 	printf("\n");
 	printf("\n");
+	*/
 	
 	/********** Initialize MPI **********/
 	int world_rank;
@@ -38,6 +56,9 @@ int main(int argc, char** argv) {
 	
 	/********** Send each subarray to each process **********/
 	int *sub_array = malloc(size * sizeof(int));
+	
+	/**** TEMPO TOTALE ****/
+	totalTime=PAPI_get_real_usec();
 	MPI_Scatter(original_array, size, MPI_INT, sub_array, size, MPI_INT, 0, MPI_COMM_WORLD);
 	
 	/********** Perform the mergesort on each process **********/
@@ -61,8 +82,10 @@ int main(int argc, char** argv) {
 		mergeSort(sorted, other_array, 0, (n - 1));
 		
 		/********** Display the sorted array **********/
+		/*
 		printf("This is the sorted array: ");
 		for(c = 0; c < n; c++) {
+		
 			
 			printf("%d ", sorted[c]);
 			
@@ -70,12 +93,18 @@ int main(int argc, char** argv) {
 			
 		printf("\n");
 		printf("\n");
+		*/
+		
+		/*****CALCOLO TEMPO******/
+		printf("tempo totale: %lld",totalTime-PAPI_get_real_usec());
 			
 		/********** Clean up root **********/
 		free(sorted);
 		free(other_array);
 			
 		}
+	
+	
 	
 	/********** Clean up rest **********/
 	free(original_array);
