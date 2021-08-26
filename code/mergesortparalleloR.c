@@ -32,11 +32,11 @@ int main(int argc, char **argv)
     //creazione array da ordinare
     for(i=0;i<n;i++){
             data[i] = random()%n;
-            printf("%d ", data[i]);
+            //printf("%d ", data[i]);
     }
-    printf(" \n ");
+   // printf(" \n ");
     
-    printf("papi init\n");
+   // printf("papi init\n");
     if (PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) exit(1);
     
     /*Create an EventSet */
@@ -108,7 +108,7 @@ int main(int argc, char **argv)
     
     printf("id processo: %d, numero elementi: %d; %d processors; %lld secs\n", id, s, p, (stopT-startT));
    
-    if(id==0)
+/*    if(id==0)
     {
     
         for(i=0; i<s; i++)
@@ -116,7 +116,7 @@ int main(int argc, char **argv)
             
         printf(" \n");
     }
-   
+*/   
    //stop dei contatori e inserimento dei risultati in countCacheMiss
    if(PAPI_stop(EventSet, &countCacheMiss) != PAPI_OK){
    	printf("Errore in stop e store del contatore \n");
@@ -128,6 +128,12 @@ int main(int argc, char **argv)
     MPI_Barrier(MPI_COMM_WORLD);
     MPI_Finalize();
 }
+
+
+
+
+
+
 
 int * merge(int *A, int asize, int *B, int bsize) {
     int ai, bi, ci, i;
