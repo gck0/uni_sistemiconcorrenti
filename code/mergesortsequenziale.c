@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 	for (int i=0;i<ELEM;i++)
 	{
 		A[i]=rand();
-		printf("%d" , A[i]);
+		//printf("%d" , A[i]);
 	}
 	printf("\n");
 		
@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
 	printf("\n");
 
 	//printing all elements in the array once its sorted.
-	for(i = 0;i < numberOfElements;i++) printf("%d ",A[i]);
+	//for(i = 0;i < numberOfElements;i++) printf("%d ",A[i]);
 	printf("\n");
 	return 0;
 }
