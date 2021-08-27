@@ -46,7 +46,7 @@ void MergeSort(int *A,int n) {
         free(R);
 }
 
-int main(int arcg, char *argv[]) {
+int main(int argc, char *argv[]) {
 	/* Code to test the MergeSort function. */
 	//NIENTE PARAMETRI
 	if (argc==1)
