@@ -77,10 +77,8 @@ int main(int argc, char *argv[]) {
 
 	// Calling merge sort to sort the array. 
 	//START CLOCK
-	long start, end;
-	struct timeval timecheck;
-	gettimeofday(&timecheck, NULL);
-	start = (long)timecheck.tv_sec * 1000 + (long)timecheck.tv_usec / 1000;
+	struct timeval tval_before, tval_after, tval_result;
+	gettimeofday(&tval_before, NULL);
 
 	//MERGE SORT
 	MergeSort(A,numberOfElements);
