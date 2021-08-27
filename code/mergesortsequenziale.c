@@ -85,9 +85,9 @@ int main(int argc, char *argv[]) {
 	
 	//STOP CLOCK
 	stop = clock();
-	exectime = ((double) (stop - start)) / CLOCKS_PER_SEC;
+	double exectime = ((double) (stop - start)) / CLOCKS_PER_SEC;
 	
-	printf("%d, ");
+	printf("%f, exectime");
 	printf("\n");
 
 	//printing all elements in the array once its sorted.
