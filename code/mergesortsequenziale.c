@@ -55,13 +55,15 @@ int main(int argc, char *argv[]) {
 		return -1;
 	}
 	//GENERIAMO UN ARRAY A CASO
-	int ELEM = argv[1];
+	int ELEM = int(argv[1]);
 	int A[ELEM];
 
 	for (int i=0;i<ELEM;i++)
 	{
 		A[i]=rand();
+		printf("%d", A[i]);
 	}
+	printf("\n");
 		
 	//int A[] = {6,2,3,1,9,10,15,13,12,17}; // creating an array of integers. 
 	int i,numberOfElements;
