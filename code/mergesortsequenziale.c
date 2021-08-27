@@ -2,7 +2,7 @@
 ///////////// MODIFICATO CON DIMENSIONE A SCELTA
 #include<stdio.h>
 #include<stdlib.h>
-#include<time.h>
+#include<sys/time.h>
 
 // Function to Merge Arrays L and R into A. 
 // lefCount = number of elements in L
