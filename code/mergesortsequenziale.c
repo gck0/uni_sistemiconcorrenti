@@ -2,6 +2,7 @@
 ///////////// MODIFICATO CON DIMENSIONE A SCELTA
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 
 // Function to Merge Arrays L and R into A. 
 // lefCount = number of elements in L
@@ -61,7 +62,7 @@ int main(int argc, char *argv[]) {
 	for (int i=0;i<ELEM;i++)
 	{
 		A[i]=rand();
-		printf("%d", A[i]);
+		printf("%d" , A[i]);
 	}
 	printf("\n");
 		
@@ -75,7 +76,16 @@ int main(int argc, char *argv[]) {
 	numberOfElements = sizeof(A)/sizeof(A[0]); 
 
 	// Calling merge sort to sort the array. 
+	//START CLOCK
+	clock_t exectime = clock();
+
 	MergeSort(A,numberOfElements);
+	
+	//STOP CLOCK
+	exectime = ((double) (clock() - exectime)) / CLOCKS_PER_SEC;
+	
+	printf("%d, ");
+	printf("\n");
 
 	//printing all elements in the array once its sorted.
 	for(i = 0;i < numberOfElements;i++) printf("%d ",A[i]);
