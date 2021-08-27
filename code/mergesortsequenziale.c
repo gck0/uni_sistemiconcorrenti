@@ -58,7 +58,7 @@ int main(int arcg, char *argv[]) {
 	int ELEM = argv[1];
 	int A[ELEM];
 
-	for (i=0;i<ELEM;i++)
+	for (int i=0;i<ELEM;i++)
 	{
 		A[i]=rand();
 	}
