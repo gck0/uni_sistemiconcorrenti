@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
 	gettimeofday(&tval_after, NULL);
 	//CALCOLO TEMPO ESECUZIONE
 	timersub(&tval_after, &tval_before, &tval_result);
-	printf("Time elapsed: %ld\n us", (long int)tval_result.tv_usec);
+	printf("Time elapsed: %ld us\n", (long int)tval_result.tv_usec);
 
 	//printing all elements in the array once its sorted.
 	//for(i = 0;i < numberOfElements;i++) printf("%d ",A[i]);
