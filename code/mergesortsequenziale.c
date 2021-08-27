@@ -77,18 +77,19 @@ int main(int argc, char *argv[]) {
 
 	// Calling merge sort to sort the array. 
 	//START CLOCK
-	
-	clock_t start,stop;
-	start = clock();
+	long start, end;
+	struct timeval timecheck;
+	gettimeofday(&timecheck, NULL);
+	start = (long)timecheck.tv_sec * 1000 + (long)timecheck.tv_usec / 1000;
 
+	//MERGE SORT
 	MergeSort(A,numberOfElements);
 	
 	//STOP CLOCK
-	stop = clock();
-	double exectime = ((double) (stop - start)) / CLOCKS_PER_SEC;
-	
-	printf("%f", exectime);
-	printf("\n");
+	gettimeofday(&tval_after, NULL);
+	//CALCOLO TEMPO ESECUZIONE
+	timersub(&tval_after, &tval_before, &tval_result);
+	printf("Time elapsed: %ld\n", (long int)tval_result.tv_usec);
 
 	//printing all elements in the array once its sorted.
 	//for(i = 0;i < numberOfElements;i++) printf("%d ",A[i]);
