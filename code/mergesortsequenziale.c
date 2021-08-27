@@ -1,5 +1,5 @@
 /* Merge sort in C */
-///////////// MODIFICATO CON DIMENSIONE A SCELTA
+///////////// MODIFICATO CON DIMENSIONE A SCELTA E CALCOLO TEMPO DI ESECUZIONE IN MICROSECONDI
 #include<stdio.h>
 #include<stdlib.h>
 #include<sys/time.h>
