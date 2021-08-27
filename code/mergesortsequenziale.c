@@ -77,6 +77,6 @@ int main(int argc, char *argv[]) {
 
 	//printing all elements in the array once its sorted.
 	for(i = 0;i < numberOfElements;i++) printf("%d ",A[i]);
-	printf('\n');
+	printf("\n");
 	return 0;
 }
