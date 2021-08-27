@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 		return -1;
 	}
 	//GENERIAMO UN ARRAY A CASO
-	int ELEM = int(argv[1]);
+	int ELEM = (int)argv[1];
 	int A[ELEM];
 
 	for (int i=0;i<ELEM;i++)
