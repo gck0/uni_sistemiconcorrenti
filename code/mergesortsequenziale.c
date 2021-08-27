@@ -77,12 +77,15 @@ int main(int argc, char *argv[]) {
 
 	// Calling merge sort to sort the array. 
 	//START CLOCK
-	clock_t exectime = clock();
+	
+	clock_t start,stop;
+	start = clock();
 
 	MergeSort(A,numberOfElements);
 	
 	//STOP CLOCK
-	exectime = ((double) (clock() - exectime)) / CLOCKS_PER_SEC;
+	stop = clock()
+	exectime = ((double) (stop - start)) / CLOCKS_PER_SEC;
 	
 	printf("%d, ");
 	printf("\n");
