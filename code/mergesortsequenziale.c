@@ -1,10 +1,12 @@
 /* Merge sort in C */
+///////////// MODIFICATO CON DIMENSIONE A SCELTA
 #include<stdio.h>
 #include<stdlib.h>
 
 // Function to Merge Arrays L and R into A. 
 // lefCount = number of elements in L
 // rightCount = number of elements in R. 
+
 void Merge(int *A,int *L,int leftCount,int *R,int rightCount) {
 	int i,j,k;
 
@@ -44,10 +46,24 @@ void MergeSort(int *A,int n) {
         free(R);
 }
 
-int main() {
+int main(int arcg, char *argv[]) {
 	/* Code to test the MergeSort function. */
-	
-	int A[] = {6,2,3,1,9,10,15,13,12,17}; // creating an array of integers. 
+	//NIENTE PARAMETRI
+	if (argc==1)
+	{
+		printf("PARAM: numeroelementi array");
+		return -1;
+	}
+	//GENERIAMO UN ARRAY A CASO
+	int ELEM = argv[1];
+	int A[ELEM];
+
+	for (i=0;i<ELEM;i++)
+	{
+		A[i]=rand();
+	}
+		
+	//int A[] = {6,2,3,1,9,10,15,13,12,17}; // creating an array of integers. 
 	int i,numberOfElements;
 
 	// finding number of elements in array as size of complete array in bytes divided by size of integer in bytes. 
