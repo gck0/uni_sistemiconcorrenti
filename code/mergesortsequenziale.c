@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
 	MergeSort(A,numberOfElements);
 	
 	//STOP CLOCK
-	stop = clock()
+	stop = clock();
 	exectime = ((double) (stop - start)) / CLOCKS_PER_SEC;
 	
 	printf("%d, ");
