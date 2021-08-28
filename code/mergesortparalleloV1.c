@@ -279,14 +279,14 @@ int main(int argc, char** argv) {
     // allocate memory for local array, scatter to fill with values and print
     localArraySize = globalArraySize / numProcs;
     localArray = (int*) malloc (localArraySize * sizeof(int));
-
+	
+    //CALCOLO TEMPO TOTALE
+    tempoTotale=PAPI_get_real_usec();
 	
     MPI_Scatter(globalArray, localArraySize, MPI_INT, localArray, 
 		localArraySize, MPI_INT, 0, MPI_COMM_WORLD);
     //printList(id, "localArray", localArray, localArraySize);   // Line B 
 	
-    //CALCOLO TEMPO TOTALE
-    tempoTotale=PAPI_get_real_usec();
     
     // PAPI: INIZIALIZZAZIONE
     if (PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) {
