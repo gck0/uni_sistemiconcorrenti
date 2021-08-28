@@ -1,12 +1,19 @@
 /* Merge sort in C */
 ///////////// MODIFICATO CON DIMENSIONE A SCELTA E CALCOLO TEMPO DI ESECUZIONE IN MICROSECONDI
-#include<stdio.h>
-#include<stdlib.h>
-#include<sys/time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <papi.h>
 
 // Function to Merge Arrays L and R into A. 
 // lefCount = number of elements in L
 // rightCount = number of elements in R. 
+
+// PAPI
+long_long startT,stopT;  //tempi di esecuzione
+long_long countCacheMiss;  //contatore cache miss
+int EventSet = PAPI_NULL;
+int retval;   // valore ritorno papi
 
 void Merge(int *A,int *L,int leftCount,int *R,int rightCount) {
 	int i,j,k;
@@ -76,18 +83,46 @@ int main(int argc, char *argv[]) {
 	numberOfElements = sizeof(A)/sizeof(A[0]); 
 
 	// Calling merge sort to sort the array. 
+	/*
 	//START CLOCK
 	struct timeval tval_before, tval_after, tval_result;
 	gettimeofday(&tval_before, NULL);
+	*/
+	
+	// PAPI: INIZIALIZZAZIONE
+	if (PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) {
+		printf("Errore init PAPI\n");
+		exit(1);
+	}
+	// PAPI: CREAZIONE EVENTSET
+	if (PAPI_create_eventset(&EventSet) != PAPI_OK) {
+		printf("Errore creazione EventSet PAPI\n");
+		exit(1);
+	}
+	retval = PAPI_add_event(EventSet,PAPI_L2_TCM);
+	printf(PAPI_strerror(retval));
+	retval = PAPI_start(EventSet) != PAPI_OK;
+	printf(PAPI_strerror(retval));
+	// PAPI: preleva il tempo
+	startT=PAPI_get_real_usec();
 
 	//MERGE SORT
 	MergeSort(A,numberOfElements);
 	
+	/*
 	//STOP CLOCK
 	gettimeofday(&tval_after, NULL);
 	//CALCOLO TEMPO ESECUZIONE
 	timersub(&tval_after, &tval_before, &tval_result);
 	printf("Time elapsed: %ld us\n", (long int)tval_result.tv_usec);
+	*/
+	
+	// PAPI: stop del timer e del contatore cache miss
+	stopT=PAPI_get_real_usec();
+	retval = PAPI_stop(EventSet, &countCacheMiss);
+	printf(PAPI_strerror(retval));
+	// VISUALIZZA REPORT
+	printf("tcm:%d \ttime:%lld us\n",id,countCacheMiss,s,p,(stopT-startT));
 
 	//printing all elements in the array once its sorted.
 	//for(i = 0;i < numberOfElements;i++) printf("%d ",A[i]);
