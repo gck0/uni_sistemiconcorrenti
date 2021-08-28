@@ -122,7 +122,7 @@ int main(int argc, char *argv[]) {
 	retval = PAPI_stop(EventSet, &countCacheMiss);
 	printf(PAPI_strerror(retval));
 	// VISUALIZZA REPORT
-	printf("tcm:%d \ttime:%lld us\n",id,countCacheMiss,s,p,(stopT-startT));
+	printf("tcm:%d \ttime:%lld us\n",countCacheMiss,(stopT-startT));
 
 	//printing all elements in the array once its sorted.
 	//for(i = 0;i < numberOfElements;i++) printf("%d ",A[i]);
