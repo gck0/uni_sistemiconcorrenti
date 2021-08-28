@@ -242,10 +242,14 @@ int* mergeSort(int height, int id, int localArray[], int size, MPI_Comm comm, in
 
 /*-------------------------------------------------------------------*/
 
+
+
+
 int main(int argc, char** argv) {
-    long_long tempoTotale;
-    long_long startT,stopT;  //tempi di esecuzione
-    int EventSet = PAPI_NULL;
+
+
+long_long startT,stopT; //PAPI TIME
+int EventSet = PAPI_NULL;
 
     int numProcs, id, globalArraySize, localArraySize, height;
     int *localArray, *globalArray;
@@ -259,6 +263,14 @@ int main(int argc, char** argv) {
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
 
     MPI_Get_processor_name (myHostName, &length); 
+
+
+   // printf("papi init\n");
+    if (PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) exit(1);
+    /*Create an EventSet */
+    if (PAPI_create_eventset(&EventSet) != PAPI_OK)  exit(1);
+
+
 
     // check for odd processes
     powerOfTwo(id, numProcs);
@@ -279,31 +291,21 @@ int main(int argc, char** argv) {
     // allocate memory for local array, scatter to fill with values and print
     localArraySize = globalArraySize / numProcs;
     localArray = (int*) malloc (localArraySize * sizeof(int));
-	
-    //CALCOLO TEMPO TOTALE
-    tempoTotale=PAPI_get_real_usec();
-	
+   
+   
+    //Start timing
+    startTime = MPI_Wtime();
+    
+    startT = PAPI_get_real_usec(); //prelevo il tempo 
+    // printf("startT: %lld \n" ,  startT);
+   
+   
     MPI_Scatter(globalArray, localArraySize, MPI_INT, localArray, 
 		localArraySize, MPI_INT, 0, MPI_COMM_WORLD);
     //printList(id, "localArray", localArray, localArraySize);   // Line B 
-	
     
-    // PAPI: INIZIALIZZAZIONE
-    if (PAPI_library_init(PAPI_VER_CURRENT) != PAPI_VER_CURRENT) {
-        printf("Errore init PAPI\n");
-        exit(1);
-    }
-    // PAPI: CREAZIONE EVENTSET
-    if (PAPI_create_eventset(&EventSet) != PAPI_OK) {
-        printf("Errore creazione EventSet PAPI\n");
-        exit(1);
-    }
     
-    //Start timing
-    startTime = MPI_Wtime();
-    startT=PAPI_get_real_usec();
     
-	
     //Merge sort
     if (id == 0) {
 		zeroStartTime = MPI_Wtime();
@@ -311,35 +313,36 @@ int main(int argc, char** argv) {
 		zeroTotalTime = MPI_Wtime() - zeroStartTime;
 		printf("Process #%d of %d on %s took %f seconds \n", 
 			id, numProcs, myHostName, zeroTotalTime);
-	}
-	else {
+    }
+    else {
 		processStartTime = MPI_Wtime();
 	        mergeSort(height, id, localArray, localArraySize, MPI_COMM_WORLD, NULL);
 		processTotalTime = MPI_Wtime() - processStartTime;
 		printf("Process #%d of %d on %s took %f seconds \n", 
 			id, numProcs, myHostName, processTotalTime);
-	}
+    }
+    
     //End timing
     localTime = MPI_Wtime() - startTime;
-    // QUI CALCOLIAMO IL TEMPO TOTALE
-    stopT = PAPI_get_real_usec();
-    printf("%lld secs totali diff\n", (stopT-startT));
-    // TEMPO COMPLESSIVO E VISUALIZZAZIONE
-    tempoTotale = PAPI_get_real_usec() - tempoTotale;
-    if (id == 0) printf("Il tempo totale di esecuzione è %lld\n", tempoTotale);
-	
+    printf("MPI WALL: %lld  secs totali\n", (localTime));
+    
+    stopT = PAPI_get_real_usec(); //fine tempo
+    
+    
+    printf("PAPI: %lld secs totali diff\n", (stopT-startT));
+
+    
+    
     MPI_Reduce(&localTime, &totalTime, 1, MPI_DOUBLE,
         MPI_MAX, 0, MPI_COMM_WORLD);
 
-
     if (id == 0) {
 		//printList(0, "FINAL SORTED ARRAY", globalArray, globalArraySize);  // Line C
-		printf("Sorting %d integers took %f seconds and %lld us\n", globalArraySize,totalTime,stopT-startT);
+		printf("Sorting %d integers took %f seconds and %lld micro \n", globalArraySize, totalTime, (stopT-startT));
 		free(globalArray);
 	}
 
     free(localArray);  
     MPI_Finalize();
-    
     return 0;
 }
