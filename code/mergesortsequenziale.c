@@ -100,9 +100,9 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 	retval = PAPI_add_event(EventSet,PAPI_L2_TCM);
-	printf(PAPI_strerror(retval));
+	if (retval!=PAPI_OK) printf(PAPI_strerror(retval));
 	retval = PAPI_start(EventSet) != PAPI_OK;
-	printf(PAPI_strerror(retval));
+	if (retval!=PAPI_OK) printf(PAPI_strerror(retval));
 	// PAPI: preleva il tempo
 	startT=PAPI_get_real_usec();
 
@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
 	// PAPI: stop del timer e del contatore cache miss
 	stopT=PAPI_get_real_usec();
 	retval = PAPI_stop(EventSet, &countCacheMiss);
-	printf(PAPI_strerror(retval));
+	if (retval!=PAPI_OK) printf(PAPI_strerror(retval));
 	// VISUALIZZA REPORT
 	printf("tcm:%d \ttime:%lld us\n",countCacheMiss,(stopT-startT));
 
